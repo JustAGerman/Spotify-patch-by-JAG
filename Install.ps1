@@ -184,6 +184,7 @@ if ($au -gt $by ) { $long = $au + 1 } else { $long = $by + 1 }
 $st = ""
 $star = $st.PadLeft($long, '*')
 
+#audio  url
 $MediaPlayer = [Windows.Media.Playback.MediaPlayer, Windows.Media, ContentType = WindowsRuntime]::New()
 $MediaPlayer.Source = [Windows.Media.Core.MediaSource]::CreateFromUri('https://nyanpass.com/nyanpass.mp3')
 $MediaPlayer.Play()
