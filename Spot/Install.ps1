@@ -94,14 +94,7 @@ param
     [string]$urlform_goofy = $null,
 
     [Parameter(HelpMessage = 'Accumulation of track listening history with Goofy.')]
-    [string]$idbox_goofy = $null,
-
-    [Parameter(HelpMessage = 'Error log ru string.')]
-    [switch]$err_ru,
-    
-    [Parameter(HelpMessage = 'Select the desired language to use for installation. Default is the detected system language.')]
-    [Alias('l')]
-    [string]$Language
+    [string]$idbox_goofy = $null
 )
 
 # Ignore errors from `Stop-Process`
@@ -119,7 +112,7 @@ function Format-LanguageCode {
     
     begin {
         $supportLanguages = @(
-            'en', 'ru', 'it', 'tr', 'ka', 'pl', 'es', 'fr', 'hi', 'pt', 'id', 'vi', 'ro', 'de', 'hu', 'zh', 'ko', 'ua', 'fa'
+            'en'
         )
     }
     
@@ -128,82 +121,6 @@ function Format-LanguageCode {
         switch -Regex ($LanguageCode) {
             '^en' {
                 $returnCode = 'en'
-                break
-            }
-            '^(ru|py)' {
-                $returnCode = 'ru'
-                break
-            }
-            '^it' {
-                $returnCode = 'it'
-                break
-            }
-            '^tr' {
-                $returnCode = 'tr'
-                break
-            }
-            '^ka' {
-                $returnCode = 'ka'
-                break
-            }
-            '^pl' {
-                $returnCode = 'pl'
-                break
-            }
-            '^es' {
-                $returnCode = 'es'
-                break
-            }
-            '^fr' {
-                $returnCode = 'fr'
-                break
-            }
-            '^hi' {
-                $returnCode = 'hi'
-                break
-            }
-            '^pt' {
-                $returnCode = 'pt'
-                break
-            }
-            '^id' {
-                $returnCode = 'id'
-                break
-            }
-            '^vi' {
-                $returnCode = 'vi'
-                break
-            }
-            '^ro' {
-                $returnCode = 'ro'
-                break
-            }
-            '^de' {
-                $returnCode = 'de'
-                break
-            }
-            '^hu' {
-                $returnCode = 'hu'
-                break
-            }
-            '^zh' {
-                $returnCode = 'zh'
-                break
-            }
-            '^ko' {
-                $returnCode = 'ko'
-                break
-            }
-            '^ua' {
-                $returnCode = 'ua'
-                break
-            }
-            '^fa' {
-                $returnCode = 'fa'
-                break
-            }
-            Default {
-                $returnCode = $PSUICulture.Remove(2)
                 break
             }
         }
@@ -244,80 +161,8 @@ function Set-ScriptLanguageStrings($LanguageCode) {
             $langStrings = CallLang -clg "en"
             break
         }
-        'ru' {
-            $langStrings = CallLang -clg "ru"
-            break
-        }
-        'it' {
-            $langStrings = CallLang -clg "it"
-            break
-        }
-        'tr' {
-            $langStrings = CallLang -clg "tr"
-            break
-        }
-        'ka' {
-            $langStrings = CallLang -clg "ka"
-            break
-        }
-        'pl' {
-            $langStrings = CallLang -clg "pl"
-            break
-        }
-        'es' {
-            $langStrings = CallLang -clg "es"
-            break
-        }
-        'fr' {
-            $langStrings = CallLang -clg "fr"
-            break
-        }
-        'hi' {
-            $langStrings = CallLang -clg "hi"
-            break
-        }
-        'pt' {
-            $langStrings = CallLang -clg "pt"
-            break
-        }
-        'id' {
-            $langStrings = CallLang -clg "id"
-            break
-        }
-        'vi' {
-            $langStrings = CallLang -clg "vi"
-            break
-        }
-        'ro' {
-            $langStrings = CallLang -clg "ro"
-            break
-        }
-        'de' {
-            $langStrings = CallLang -clg "de"
-            break
-        }
-        'hu' {
-            $langStrings = CallLang -clg "hu"
-            break
-        }
-        'zh' {
-            $langStrings = CallLang -clg "zh"
-            break
-        }
-        'ko' {
-            $langStrings = CallLang -clg "ko"
-            break
-        }
-        'ua' {
-            $langStrings = CallLang -clg "ua"
-            break
-        }
-        'fa' {
-            $langStrings = CallLang -clg "fa"
-            break
-        }
         Default {
-            # Default to English if unable to find a match.
+            # Default to English
             $langStrings = CallLang -clg "en"
             break
         }
@@ -333,29 +178,16 @@ $langCode = Format-LanguageCode -LanguageCode $Language
 # Set script language strings.
 $lang = Set-ScriptLanguageStrings -LanguageCode $langCode
 
-# Set variable 'ru'.
-if ($langCode -eq 'ru') { 
-    $ru = $true
-    $urlru = "https://raw.githubusercontent.com/SpotX-CLI/SpotX-commons/main/Augmented%20translation/ru.json"
-    $webjsonru = (Invoke-WebRequest -UseBasicParsing -Uri $urlru).Content | ConvertFrom-Json
-}
-# Set variable 'add translation line'.
-if ($langCode -match '^(it|tr|ka|pl|es|fr|hi|pt|id|vi|ro|de|hu|zh|ko|ua|fa)') { $line = $true }
-
 # Automatic length of stars
-$au = ($lang).Author.Length + ($lang).Author2.Length
-$by = ($lang).TranslationBy.Length + ($lang).TranslationBy2.Length
+$au = ($lang).Author.Length + ($lang).Author.Length
 if ($au -gt $by ) { $long = $au + 1 } else { $long = $by + 1 } 
 $st = ""
 $star = $st.PadLeft($long, '*')
 
 Write-Host $star
-Write-Host ($lang).Author"" -NoNewline
-Write-Host ($lang).Author2 -ForegroundColor DarkYellow
+Write-Host ($lang).Author"JustAGerman" -ForegroundColor DarkYellow
 if (!($line)) { Write-Host $star`n }
 if ($line) {
-    Write-Host ($lang).TranslationBy"" -NoNewline
-    Write-Host ($lang).TranslationBy2 -ForegroundColor DarkYellow
     Write-Host $star`n
 }
 
@@ -428,9 +260,6 @@ function downloadScripts($param1) {
         $old = [IO.File]::ReadAllText($l)
         $links = $old -match "https:\/\/upgrade.scdn.co\/upgrade\/client\/win32-x86\/spotify_installer-$online\.g[0-9a-f]{8}-[0-9]{1,4}\.exe" 
         $links = $Matches.Values
-    }
-    if ($ru -and $param1 -eq "cache-spotify") {
-        $links2 = "https://raw.githubusercontent.com/SpotX-CLI/SpotX-Win/main/scripts/cache/cache_spotify_ru.ps1"
     }
     if (!($ru) -and $param1 -eq "cache-spotify" ) { 
         $links2 = "https://raw.githubusercontent.com/SpotX-CLI/SpotX-Win/main/scripts/cache/cache_spotify.ps1"
@@ -535,7 +364,7 @@ function DesktopFolder {
     return $desktop_folder
 }
 
-# Recommended version for spotx
+# Recommended version for spotify patch
 $online = "1.2.0.1165"
 
 # Check version Spotify offline
@@ -691,29 +520,7 @@ if ($spotifyInstalled) {
     }
     
     # Unsupported version Spotify
-    if ($online -lt $offline) {
-        # Submit unsupported version of Spotify to google form for further processing
-        try { 
-            $txt = [IO.File]::ReadAllText($spotifyExecutable)
-            $regex = "(\d+)\.(\d+)\.(\d+)\.(\d+)(\.g[0-9a-f]{8})"
-            $v = $txt | Select-String $regex -AllMatches
-            $version = $v.Matches.Value
-            $Parameters = @{
-                Uri    = 'https://docs.google.com/forms/d/e/1FAIpQLSegGsAgilgQ8Y36uw-N7zFF6Lh40cXNfyl1ecHPpZcpD8kdHg/formResponse'
-                Method = 'POST'
-                Body   = @{
-                    'entry.620327948'  = $version
-                    'entry.1402903593' = $win_os
-                    'entry.860691305'  = $psv
-                    'entry.2067427976' = $online + " меньше чем " + $offline
-                }   
-            }
-            Invoke-WebRequest -UseBasicParsing @Parameters | Out-Null
-        }
-        catch {
-            Write-Host 'Unable to submit new version of Spotify' 
-            Write-Host "error description: "$Error[0]
-        }
+
 
         if ($confirm_spoti_recomended_over -or $confirm_spoti_recomended_unistall) {
             Write-Host ($lang).NewV`n
@@ -785,7 +592,6 @@ if ($spotifyInstalled) {
             }
         }
     }
-}
 # If there is no client or it is outdated, then install
 if (-not $spotifyInstalled -or $upgrade_client) {
 
