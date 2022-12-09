@@ -140,7 +140,7 @@ function Format-LanguageCode {
 function CallLang($clg) {
 
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $urlLang = "https://raw.githubusercontent.com/SpotX-CLI/SpotX-Win/main/scripts/installer-lang/$clg.ps1"
+    $urlLang = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/Spot/en.ps1"
     $ProgressPreference = 'SilentlyContinue'
     
     try {
@@ -262,12 +262,12 @@ function downloadScripts($param1) {
         $links = $Matches.Values
     }
     if (!($ru) -and $param1 -eq "cache-spotify" ) { 
-        $links2 = "https://raw.githubusercontent.com/SpotX-CLI/SpotX-Win/main/scripts/cache/cache_spotify.ps1"
+        $links2 = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/Spot/cache_spotify.ps1"
     }
     
-    $web_Url_prev = "https://github.com/mrpond/BlockTheSpot/releases/latest/download/chrome_elf.zip", $links, `
-        $links2, "https://raw.githubusercontent.com/SpotX-CLI/SpotX-Win/main/scripts/cache/hide_window.vbs", `
-        "https://raw.githubusercontent.com/SpotX-CLI/SpotX-Win/main/scripts/cache/run_ps.bat", "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFN2hWu4UO-ZWyVe8wlP9c0JsrduA49xBnRmSLOt8SWaOfIpCwjDLKXMTWJQ5aKj3WakQv6-Hnv9rz/pub?gid=0&single=true&output=tsv"
+    $web_Url_prev = "https://github.com/JustAGerman/Spotify-patch-by-JAG/blob/main/Spot/chrome_elf.zip", $links, `
+        $links2, "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/Spot/hide_window.vbs", `
+        "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/Spot/run_ps.bat", "https://docs.google.com/spreadsheets/d/e/2PACX-1vSFN2hWu4UO-ZWyVe8wlP9c0JsrduA49xBnRmSLOt8SWaOfIpCwjDLKXMTWJQ5aKj3WakQv6-Hnv9rz/pub?gid=0&single=true&output=tsv"
 
     $local_Url_prev = "$PWD\chrome_elf.zip", "$PWD\SpotifySetup.exe", "$cache_folder\cache_spotify.ps1", "$cache_folder\hide_window.vbs", "$cache_folder\run_ps.bat", "$PWD\links.tsv"
     $web_name_file_prev = "chrome_elf.zip", "SpotifySetup.exe", "cache_spotify.ps1", "hide_window.vbs", "run_ps.bat", "links.tsv"
@@ -741,7 +741,7 @@ if (!($cache_on) -and !($cache_off)) {
 if ($exp_standart) { Write-Host ($lang).ExpStandart`n }
 if ($exp_spotify) { Write-Host ($lang).ExpSpotify`n }
 
-$url = "https://raw.githubusercontent.com/SpotX-CLI/SpotX-commons/main/patches.json"
+$url = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/Spot/patches.json"
 $webjson = (Invoke-WebRequest -UseBasicParsing -Uri $url).Content | ConvertFrom-Json
 
 function Helper($paramname) {
@@ -1068,7 +1068,7 @@ if (Test-Path $xpui_js_patch) {
     $xpui_test_js = $reader.ReadToEnd()
     $reader.Close()
         
-    If ($xpui_test_js -match 'patched by spotx') {
+    If ($xpui_test_js -match 'patched by JustAGerman') {
 
         $test_xpui_js_bak = Test-Path -Path $xpui_js_bak_patch
         $test_xpui_css_bak = Test-Path -Path $xpui_css_bak_patch
@@ -1193,7 +1193,7 @@ If (Test-Path $xpui_spa_patch) {
     $patched_by_spotx = $reader.ReadToEnd()
     $reader.Close()
 
-    If ($patched_by_spotx -match 'patched by spotx') {
+    If ($patched_by_spotx -match 'patched by JustAGerman') {
         $zip.Dispose()    
 
         if ($test_bak_spa) {
