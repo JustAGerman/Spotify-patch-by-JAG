@@ -184,6 +184,10 @@ if ($au -gt $by ) { $long = $au + 1 } else { $long = $by + 1 }
 $st = ""
 $star = $st.PadLeft($long, '*')
 
+$MediaPlayer = [Windows.Media.Playback.MediaPlayer, Windows.Media, ContentType = WindowsRuntime]::New()
+$MediaPlayer.Source = [Windows.Media.Core.MediaSource]::CreateFromUri('https://nyanpass.com/nyanpass.mp3')
+$MediaPlayer.Play()
+
 Write-Host $star
 Write-Host ($lang).Author"JustAGerman" -ForegroundColor DarkYellow
 if (!($line)) { Write-Host $star`n }
