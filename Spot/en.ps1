@@ -1,6 +1,6 @@
 [PSCustomObject]@{
     Author          = "Patch author:"
-    Author2         = "@Amd64fox"
+    Author2         = "JustAGerman"
     Incorrect       = "Oops, an incorrect value,"
     Incorrect2      = "enter again through "
     Download        = "Error downloading"
