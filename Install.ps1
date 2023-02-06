@@ -116,7 +116,7 @@ function Format-LanguageCode {
     
     
     $supportLanguages = @(
-        'en'
+        'en', 'ru', 'it', 'tr', 'ka', 'pl', 'es', 'fr', 'hi', 'pt', 'id', 'vi', 'ro', 'de', 'hu', 'zh', 'zh-TW', 'ko', 'ua', 'fa', 'sr', 'lv', 'bn', 'el', 'fi'
     )
     
     
@@ -124,6 +124,102 @@ function Format-LanguageCode {
     switch -Regex ($LanguageCode) {
         '^en' {
             $returnCode = 'en'
+            break
+        }
+        '^(ru|py)' {
+            $returnCode = 'ru'
+            break
+        }
+        '^it' {
+            $returnCode = 'it'
+            break
+        }
+        '^tr' {
+            $returnCode = 'tr'
+            break
+        }
+        '^ka' {
+            $returnCode = 'ka'
+            break
+        }
+        '^pl' {
+            $returnCode = 'pl'
+            break
+        }
+        '^es' {
+            $returnCode = 'es'
+            break
+        }
+        '^fr' {
+            $returnCode = 'fr'
+            break
+        }
+        '^hi' {
+            $returnCode = 'hi'
+            break
+        }
+        '^pt' {
+            $returnCode = 'pt'
+            break
+        }
+        '^id' {
+            $returnCode = 'id'
+            break
+        }
+        '^vi' {
+            $returnCode = 'vi'
+            break
+        }
+        '^ro' {
+            $returnCode = 'ro'
+            break
+        }
+        '^de' {
+            $returnCode = 'de'
+            break
+        }
+        '^hu' {
+            $returnCode = 'hu'
+            break
+        }
+        '^(zh|zh-CN)$' {
+            $returnCode = 'zh'
+            break
+        }
+        '^zh-TW' {
+            $returnCode = 'zh-TW'
+            break
+        }
+        '^ko' {
+            $returnCode = 'ko'
+            break
+        }
+        '^ua' {
+            $returnCode = 'ua'
+            break
+        }
+        '^fa' {
+            $returnCode = 'fa'
+            break
+        }
+        '^sr' {
+            $returnCode = 'sr'
+            break
+        }
+        '^lv' {
+            $returnCode = 'lv'
+            break
+        }
+        '^bn' {
+            $returnCode = 'bn'
+            break
+        }
+        '^el' {
+            $returnCode = 'el'
+            break
+        }
+        '^fi' {
+            $returnCode = 'fi'
             break
         }
         Default {
@@ -148,8 +244,17 @@ function Format-LanguageCode {
 function CallLang($clg) {
 
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $urlLang = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/en.ps1"
+    $urlLang = "https://raw.githubusercontent.com/amd64fox/SpotX/main/scripts/installer-lang/$clg.ps1"
     $ProgressPreference = 'SilentlyContinue'
+    
+    try {
+(Invoke-WebRequest -useb $urlLang).Content | Invoke-Expression 
+    }
+    catch {
+        Write-Host "Error loading $clg language"
+        Pause
+        Exit
+    }
 }
 
 
@@ -159,8 +264,24 @@ $langCode = Format-LanguageCode -LanguageCode $Language
 
 $lang = CallLang -clg $langCode
 
+
 Write-Host ($lang).Welcome
 Write-Host ""
+
+# Sending a statistical web query to cutt.ly
+$ErrorActionPreference = 'SilentlyContinue'
+$cutt_url = "https://cutt.ly/DK8UQub"
+try {
+    $ProgressPreference = 'SilentlyContinue'
+    Invoke-WebRequest -useb -Uri $cutt_url | Out-Null
+}
+catch {
+    Start-Sleep -Milliseconds 2300
+    try { 
+        Invoke-WebRequest -useb -Uri $cutt_url | Out-Null
+    }
+    catch { }
+}
 
 $spotifyDirectory = "$env:APPDATA\Spotify"
 $spotifyDirectory2 = "$env:LOCALAPPDATA\Spotify"
@@ -218,7 +339,7 @@ function downloadScripts($param1) {
         $links2 = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/cache_spotify.ps1"
     }
     
-    $web_Url_prev = "https://github.com/JustAGerman/Spotify-patch-by-JAG/blob/main/chrome_elf.zip", $links, `
+    $web_Url_prev = "https://github.com/JustAGerman/Spotify-patch-by-JAG/raw/main/chrome_elf.zip", $links, `
         $links2, "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/hide_window.vbs", `
         "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/run_ps.bat"
 
@@ -305,6 +426,8 @@ function downloadScripts($param1) {
 } 
 
 function DesktopFolder {
+
+    # If the default Dekstop folder does not exist, then try to find it through the registry.
     
     $ErrorActionPreference = 'SilentlyContinue' 
     if (Test-Path "$env:USERPROFILE\Desktop") {  
@@ -320,13 +443,17 @@ function DesktopFolder {
     return $desktop_folder
 }
 
+# Recommended version for spotx
 $onlineFull = "1.2.4.912.g949d5fd0-272"
 $online = ($onlineFull -split ".g")[0]
 
+# Check version Spotify offline
 $offline = (Get-Item $spotifyExecutable).VersionInfo.FileVersion
 
+# Check version Spotify.bak
 $offline_bak = (Get-Item $exe_bak).VersionInfo.FileVersion
 
+# add Tls12
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 Stop-Process -Name Spotify
@@ -335,6 +462,7 @@ if ($psv -ge 7) {
     Import-Module Appx -UseWindowsPowerShell -WarningAction:SilentlyContinue
 }
 
+# Check version Windows
 $win_os = (get-itemproperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion" -Name ProductName).ProductName
 $win11 = $win_os -match "\windows 11\b"
 $win10 = $win_os -match "\windows 10\b"
@@ -360,7 +488,7 @@ if ($win11 -or $win10 -or $win8_1 -or $win8) {
         }
         if ($confirm_uninstall_ms_spoti) { $ch = 'y' }
         if ($ch -eq 'y') {      
-            $ProgressPreference = 'SilentlyContinue'
+            $ProgressPreference = 'SilentlyContinue' # Hiding Progress Bars
             if ($confirm_uninstall_ms_spoti) { Write-Host ($lang).MsSpoti3`n }
             if (!($confirm_uninstall_ms_spoti)) { Write-Host ($lang).MsSpoti4`n }
             Get-AppxPackage -Name SpotifyAB.SpotifyMusic | Remove-AppxPackage
