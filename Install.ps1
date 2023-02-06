@@ -540,7 +540,6 @@ if ($spotifyInstalled) {
             }
         }
     }
-}
 # If there is no client or it is outdated, then install
 if (-not $spotifyInstalled -or $upgrade_client) {
 
