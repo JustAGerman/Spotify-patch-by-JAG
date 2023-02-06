@@ -244,7 +244,7 @@ function Format-LanguageCode {
 function CallLang($clg) {
 
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    $urlLang = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/SpotX-main/en.ps1"
+    $urlLang = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/en.ps1"
     $ProgressPreference = 'SilentlyContinue'
     
     try {
