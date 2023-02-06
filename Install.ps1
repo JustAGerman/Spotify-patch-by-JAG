@@ -116,7 +116,7 @@ function Format-LanguageCode {
     
     
     $supportLanguages = @(
-        'en', 'ru', 'it', 'tr', 'ka', 'pl', 'es', 'fr', 'hi', 'pt', 'id', 'vi', 'ro', 'de', 'hu', 'zh', 'zh-TW', 'ko', 'ua', 'fa', 'sr', 'lv', 'bn', 'el', 'fi'
+        'en'
     )
     
     
@@ -124,107 +124,6 @@ function Format-LanguageCode {
     switch -Regex ($LanguageCode) {
         '^en' {
             $returnCode = 'en'
-            break
-        }
-        '^(ru|py)' {
-            $returnCode = 'ru'
-            break
-        }
-        '^it' {
-            $returnCode = 'it'
-            break
-        }
-        '^tr' {
-            $returnCode = 'tr'
-            break
-        }
-        '^ka' {
-            $returnCode = 'ka'
-            break
-        }
-        '^pl' {
-            $returnCode = 'pl'
-            break
-        }
-        '^es' {
-            $returnCode = 'es'
-            break
-        }
-        '^fr' {
-            $returnCode = 'fr'
-            break
-        }
-        '^hi' {
-            $returnCode = 'hi'
-            break
-        }
-        '^pt' {
-            $returnCode = 'pt'
-            break
-        }
-        '^id' {
-            $returnCode = 'id'
-            break
-        }
-        '^vi' {
-            $returnCode = 'vi'
-            break
-        }
-        '^ro' {
-            $returnCode = 'ro'
-            break
-        }
-        '^de' {
-            $returnCode = 'de'
-            break
-        }
-        '^hu' {
-            $returnCode = 'hu'
-            break
-        }
-        '^(zh|zh-CN)$' {
-            $returnCode = 'zh'
-            break
-        }
-        '^zh-TW' {
-            $returnCode = 'zh-TW'
-            break
-        }
-        '^ko' {
-            $returnCode = 'ko'
-            break
-        }
-        '^ua' {
-            $returnCode = 'ua'
-            break
-        }
-        '^fa' {
-            $returnCode = 'fa'
-            break
-        }
-        '^sr' {
-            $returnCode = 'sr'
-            break
-        }
-        '^lv' {
-            $returnCode = 'lv'
-            break
-        }
-        '^bn' {
-            $returnCode = 'bn'
-            break
-        }
-        '^el' {
-            $returnCode = 'el'
-            break
-        }
-        '^fi' {
-            $returnCode = 'fi'
-            break
-        }
-        Default {
-            $returnCode = $PSUICulture
-            $long_code = $true
             break
         }
     }
