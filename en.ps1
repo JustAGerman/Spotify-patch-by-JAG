@@ -33,7 +33,7 @@
     PodcatsOff      = "Off Podcasts"
     PodcastsOn      = "On Podcasts"
     PodcatsSelect   = "Do you want to disable podcasts, episodes and audiobooks from the main page? [Y/N]"
-    DowngradeNote   = "It is recommended to block because Spotify was downgraded"
+    DowngradeNote   = "It is recommended to block because Spotify will patch it likely"
     UpdBlock        = "Spotify updates blocked"
     UpdUnblock      = "Spotify updates are not blocked"
     UpdSelect       = "Want to block Spotify updates? [Y/N]"
