@@ -108,7 +108,7 @@ function Format-LanguageCode {
     
     
     $supportLanguages = @(
-        'en', 'ru', 'it', 'tr', 'ka', 'pl', 'es', 'fr', 'hi', 'pt', 'id', 'vi', 'ro', 'de', 'hu', 'zh', 'zh-TW', 'ko', 'ua', 'fa', 'sr', 'lv', 'bn', 'el', 'fi', 'ja', 'fil'
+        'en'
     )
     
     
@@ -116,111 +116,6 @@ function Format-LanguageCode {
     switch -Regex ($LanguageCode) {
         '^en' {
             $returnCode = 'en'
-            break
-        }
-        '^(ru|py)' {
-            $returnCode = 'ru'
-            break
-        }
-        '^it' {
-            $returnCode = 'it'
-            break
-        }
-        '^tr' {
-            $returnCode = 'tr'
-            break
-        }
-        '^ka' {
-            $returnCode = 'ka'
-            break
-        }
-        '^pl' {
-            $returnCode = 'pl'
-            break
-        }
-        '^es' {
-            $returnCode = 'es'
-            break
-        }
-        '^fr' {
-            $returnCode = 'fr'
-            break
-        }
-        '^hi' {
-            $returnCode = 'hi'
-            break
-        }
-        '^pt' {
-            $returnCode = 'pt'
-            break
-        }
-        '^id' {
-            $returnCode = 'id'
-            break
-        }
-        '^vi' {
-            $returnCode = 'vi'
-            break
-        }
-        '^ro' {
-            $returnCode = 'ro'
-            break
-        }
-        '^de' {
-            $returnCode = 'de'
-            break
-        }
-        '^hu' {
-            $returnCode = 'hu'
-            break
-        }
-        '^(zh|zh-CN)$' {
-            $returnCode = 'zh'
-            break
-        }
-        '^zh-TW' {
-            $returnCode = 'zh-TW'
-            break
-        }
-        '^ko' {
-            $returnCode = 'ko'
-            break
-        }
-        '^ua' {
-            $returnCode = 'ua'
-            break
-        }
-        '^fa' {
-            $returnCode = 'fa'
-            break
-        }
-        '^sr' {
-            $returnCode = 'sr'
-            break
-        }
-        '^lv' {
-            $returnCode = 'lv'
-            break
-        }
-        '^bn' {
-            $returnCode = 'bn'
-            break
-        }
-        '^el' {
-            $returnCode = 'el'
-            break
-        }
-        '^fi$' {
-            $returnCode = 'fi'
-            break
-        }
-        '^ja' {
-            $returnCode = 'ja'
-            break
-        
-        }
-        '^fil' {
-            $returnCode = 'fil'
             break
         }
         Default {
@@ -269,15 +164,6 @@ function CallLang($clg) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     $urlLang = "https://raw.githubusercontent.com/JustAGerman/Spotify-patch-by-JAG/main/en.ps1"
     $ProgressPreference = 'SilentlyContinue'
-    
-    try {
-(Invoke-WebRequest -useb $urlLang).Content | Invoke-Expression 
-    }
-    catch {
-        Write-Host "Error loading $clg language"
-        Pause
-        Exit
-    }
 }
 
 
@@ -331,22 +217,6 @@ if (!($version -and $version -match $match_v)) {
     }
 }
 $online = ($onlineFull -split ".g")[0]
-
-# Sending a statistical web query to cutt.ly
-$ErrorActionPreference = 'SilentlyContinue'
-$cutt_url = "https://cutt.ly/DK8UQub"
-$retries = 0
-
-while ($retries -lt 2) {
-    try {
-        Invoke-WebRequest -useb -Uri $cutt_url | Out-Null
-        break
-    }
-    catch {
-        $retries++
-        Start-Sleep -Seconds 2
-    }
-}
 
 function incorrectValue {
 
@@ -629,27 +499,6 @@ if ($spotifyInstalled) {
     
     # Unsupported version Spotify
     if ($testversion) {
-        # Submit unsupported version of Spotify to google form for further processing
-        try { 
-            $txt = [IO.File]::ReadAllText($spotifyExecutable)
-            $regex = "(\d+)\.(\d+)\.(\d+)\.(\d+)(\.g[0-9a-f]{8})"
-            $v = $txt | Select-String $regex -AllMatches
-            $ver = $v.Matches.Value[0]
-            if ($ver.Count -gt 1) { $ver = $ver[0] }
-
-            $Parameters = @{
-                Uri    = 'https://docs.google.com/forms/d/e/1FAIpQLSegGsAgilgQ8Y36uw-N7zFF6Lh40cXNfyl1ecHPpZcpD8kdHg/formResponse'
-                Method = 'POST'
-                Body   = @{
-                    'entry.620327948'  = $ver
-                    'entry.1951747592' = $country
-                    'entry.1402903593' = $win_os
-                    'entry.860691305'  = $psv
-                    'entry.2067427976' = $online + " < " + $offline
-                }   
-            }
-            Invoke-WebRequest -useb @Parameters | Out-Null
-        }
         catch {
             Write-Host 'Unable to submit new version of Spotify' 
             Write-Host "error description: "$Error[0]
