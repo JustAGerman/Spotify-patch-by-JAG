@@ -108,7 +108,7 @@ function Format-LanguageCode {
     
     
     $supportLanguages = @(
-        'en'
+        'en', 'ru', 'it', 'tr', 'ka', 'pl', 'es', 'fr', 'hi', 'pt', 'id', 'vi', 'ro', 'de', 'hu', 'zh', 'zh-TW', 'ko', 'ua', 'fa', 'sr', 'lv', 'bn', 'el', 'fi', 'ja', 'fil'
     )
     
     
@@ -116,6 +116,111 @@ function Format-LanguageCode {
     switch -Regex ($LanguageCode) {
         '^en' {
             $returnCode = 'en'
+            break
+        }
+        '^(ru|py)' {
+            $returnCode = 'ru'
+            break
+        }
+        '^it' {
+            $returnCode = 'it'
+            break
+        }
+        '^tr' {
+            $returnCode = 'tr'
+            break
+        }
+        '^ka' {
+            $returnCode = 'ka'
+            break
+        }
+        '^pl' {
+            $returnCode = 'pl'
+            break
+        }
+        '^es' {
+            $returnCode = 'es'
+            break
+        }
+        '^fr' {
+            $returnCode = 'fr'
+            break
+        }
+        '^hi' {
+            $returnCode = 'hi'
+            break
+        }
+        '^pt' {
+            $returnCode = 'pt'
+            break
+        }
+        '^id' {
+            $returnCode = 'id'
+            break
+        }
+        '^vi' {
+            $returnCode = 'vi'
+            break
+        }
+        '^ro' {
+            $returnCode = 'ro'
+            break
+        }
+        '^de' {
+            $returnCode = 'de'
+            break
+        }
+        '^hu' {
+            $returnCode = 'hu'
+            break
+        }
+        '^(zh|zh-CN)$' {
+            $returnCode = 'zh'
+            break
+        }
+        '^zh-TW' {
+            $returnCode = 'zh-TW'
+            break
+        }
+        '^ko' {
+            $returnCode = 'ko'
+            break
+        }
+        '^ua' {
+            $returnCode = 'ua'
+            break
+        }
+        '^fa' {
+            $returnCode = 'fa'
+            break
+        }
+        '^sr' {
+            $returnCode = 'sr'
+            break
+        }
+        '^lv' {
+            $returnCode = 'lv'
+            break
+        }
+        '^bn' {
+            $returnCode = 'bn'
+            break
+        }
+        '^el' {
+            $returnCode = 'el'
+            break
+        }
+        '^fi$' {
+            $returnCode = 'fi'
+            break
+        }
+        '^ja' {
+            $returnCode = 'ja'
+            break
+        
+        }
+        '^fil' {
+            $returnCode = 'fil'
             break
         }
         Default {
@@ -180,6 +285,7 @@ function CallLang($clg) {
 $langCode = Format-LanguageCode -LanguageCode $Language
 
 $lang = CallLang -clg $langCode
+
 
 Write-Host ($lang).Welcome
 Write-Host ""
@@ -1207,7 +1313,7 @@ If ($test_spa) {
     $patched_by_spotx = $reader.ReadToEnd()
     $reader.Close()
 
-    If ($patched_by_spotx -match 'patched by JAG') {
+    If ($patched_by_spotx -match 'patched by spotx') {
         $zip.Dispose()    
 
         if ($test_bak_spa) {
